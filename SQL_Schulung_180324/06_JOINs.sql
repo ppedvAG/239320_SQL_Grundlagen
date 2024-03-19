@@ -71,3 +71,31 @@ SELECT TOP 1 ProductName, Quantity FROM [Order Details]
 JOIN Products ON Products.ProductID = [Order Details].ProductID
 WHERE ProductName = 'Chai'
 ORDER BY Quantity DESC
+
+---------------------------------------------------
+-- OUTER JOINS: Left/Right
+
+-- Right: Z.189 & Z.502
+SELECT * FROM Orders
+RIGHT JOIN Customers ON Orders.CustomerID = Customers.CustomerID
+
+-- LEFT
+SELECT * FROM Customers
+LEFT JOIN Orders ON Orders.CustomerID = Customers.CustomerID
+
+-- "invertieren", d.h keine Schnittmenge anzeigen, durch filtern nach NULL
+SELECT * FROM Customers
+LEFT JOIN Orders ON Orders.CustomerID = Customers.CustomerID
+WHERE OrderID IS NULL
+
+SELECT * FROM Orders
+RIGHT JOIN Customers ON Orders.CustomerID = Customers.CustomerID
+WHERE OrderID IS NULL
+
+-- CROSS JOIN: (A x B) = 830 Zeilen x 91 Zeilen
+SELECT * FROM Orders CROSS JOIN Customers
+
+-- SELF JOIN
+SELECT E1.EmployeeID, E1.LastName as Vorgesetzter, 
+E2.EmployeeID, E2.LastName as Angestellter FROM Employees as E1
+RIGHT JOIN Employees as E2 ON E1.EmployeeID = E2.ReportsTo
