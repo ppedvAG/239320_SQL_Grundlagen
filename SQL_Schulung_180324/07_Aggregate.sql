@@ -93,3 +93,6 @@ OrderID, "TageZuSpaet"
 OrderID, "TageZuSpaet"
 usw...
 */
+SELECT OrderID, ISNULL(CAST(DATEDIFF(DAY, RequiredDate, ShippedDate) as nvarchar), 'Nicht ausgeliefert!') as Verzögerung 
+FROM Orders
+WHERE DATEDIFF(DAY, RequiredDate, ShippedDate) > 0 OR ShippedDate IS NULL
